@@ -1,5 +1,7 @@
+//array that stores all the results
 let resultArray = [];
 
+//sample five stars
 const fiveStar = [
   {
     name: "Nyanderer",
@@ -31,6 +33,7 @@ const fiveStar = [
   },
 ];
 
+//sample four stars
 const fourStar = [
   {
     name: "Cat-eya",
@@ -62,6 +65,7 @@ const fourStar = [
   },
 ];
 
+//crap you get when you don't get four or five stars
 const litterBox = [
   {
     name: "Crap1",
