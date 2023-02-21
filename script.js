@@ -129,7 +129,7 @@ function gachaTime() {
   //check if the last ninety pulls contain a 5 star, if not guarantee a five star
   else if (
     !containsFiveStar.includes("fiveStar") &&
-    containsFiveStar.length === 90
+    containsFiveStar.length === 89
   ) {
     resultArray.push(fiveStar[Math.floor(Math.random() * 7)]);
     pityCounter = 0;
