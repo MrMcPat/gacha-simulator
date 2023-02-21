@@ -107,21 +107,19 @@ gachaTenButton.addEventListener("click", () => {
 
 //main gacha function, bread and butter for this to work
 function gachaTime() {
-  let containsFourStar = [];
-  let containsFiveStar = [];
   let lastTenpulls = resultArray.slice(-9);
   let lastNinetypulls = resultArray.slice(-89);
 
   pityCounter++;
 
   //records the last ten pull results
-  lastTenpulls.forEach((element) => {
-    containsFourStar.push(element.type);
+  let containsFourStar = lastTenpulls.map((element) => {
+    return element.type;
   });
 
   //records the last ninety pull results
-  lastNinetypulls.forEach((element) => {
-    containsFiveStar.push(element.type);
+  let containsFiveStar = lastNinetypulls.map((element) => {
+    return element.type;
   });
 
   //check if the last ten pulls contain a 4 star, if not guarantee a four star
@@ -131,7 +129,7 @@ function gachaTime() {
   //check if the last ninety pulls contain a 5 star, if not guarantee a five star
   else if (
     !containsFiveStar.includes("fiveStar") &&
-    containsFiveStar.length === 89
+    containsFiveStar.length === 90
   ) {
     resultArray.push(fiveStar[Math.floor(Math.random() * 7)]);
     pityCounter = 0;
