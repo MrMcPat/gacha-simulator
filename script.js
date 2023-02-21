@@ -112,12 +112,12 @@ function gachaTime() {
 
   pityCounter++;
 
-  //records the last ten pull results
+  //creates an array of the last ten pull types
   let containsFourStar = lastTenpulls.map((element) => {
     return element.type;
   });
 
-  //records the last ninety pull results
+  //creates an array of the last ninety pull types
   let containsFiveStar = lastNinetypulls.map((element) => {
     return element.type;
   });
