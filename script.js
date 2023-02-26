@@ -1,5 +1,16 @@
+let primocatnipCount = 0;
+
 //array that stores all the results
 let resultArray = [];
+
+//last five star acquired
+let lastFiveStar;
+
+//promotional five star scarameow
+const promotionalFiveStar = {
+  name: "Scarameow",
+  type: "fiveStar",
+};
 
 //sample five stars
 const fiveStar = [
@@ -136,38 +147,92 @@ function gachaTime() {
   }
   //run the probability functions depending if you hit the 70th pull or not
   else {
-    pityCounter < 70 ? randomOutcome() : softPity();
+    // pityCounter < 70
+    //   ? guaranteedFiveStarRandomOutcome()
+    //   : guaranteedFiveStarSoftPity()
+    if (pityCounter < 70) {
+      lastFiveStar != "Scarameow"
+        ? guaranteedFiveStarRandomOutcome()
+        : fiftyFiftyRandomOutcome();
+    } else {
+      lastFiveStar != "Scarameow"
+        ? guaranteedFiveStarSoftPity()
+        : fiftyFiftySoftPity();
+    }
   }
 
   //outputs the result array of your pulls
   console.log(resultArray);
 }
 
-//probability function of the gacha results before the 70th pull
-function randomOutcome() {
+//probability function of the fifty fifty five star before the 70th pull
+function fiftyFiftyRandomOutcome() {
   let randomNumber = Math.random();
 
   if (randomNumber <= 0.1) {
     resultArray.push(fourStar[Math.floor(Math.random() * 7)]);
   } else if (randomNumber > 0.1 && randomNumber <= 0.106) {
-    resultArray.push(fiveStar[Math.floor(Math.random() * 7)]);
+    randomNumber >= 0.103
+      ? resultArray.push(fiveStar[Math.floor(Math.random() * 7)])
+      : resultArray.push(promotionalFiveStar);
+    randomNumber >= 0.103
+      ? (lastFiveStar = fiveStar[Math.floor(Math.random() * 7)].name)
+      : (lastFiveStar = promotionalFiveStar.name);
     pityCounter = 0;
+    lastFiveStar = promotionalFiveStar.name;
   } else {
     resultArray.push(litterBox[Math.floor(Math.random() * 3)]);
   }
 }
 
-//soft pity probability function of the gacha results after the 70th pull
-function softPity() {
+//soft pity probability function of the fifty fifty five star before the 70th pull
+function fiftyFiftySoftPity() {
   pityAfterSeventy = pityAfterSeventy + 0.0001;
   let randomNumber = Math.random();
 
   if (randomNumber <= 0.1) {
     resultArray.push(fourStar[Math.floor(Math.random() * 7)]);
   } else if (randomNumber > 0.1 && randomNumber <= pityAfterSeventy) {
-    resultArray.push(fiveStar[Math.floor(Math.random() * 7)]);
+    randomNumber >= (pityAfterSeventy - 0.1) / 2 + 0.1
+      ? resultArray.push(fiveStar[Math.floor(Math.random() * 7)])
+      : (lastFiveStar = promotionalFiveStar.name);
+    randomNumber >= (pityAfterSeventy - 0.1) / 2 + 0.1
+      ? (lastFiveStar = fiveStar[Math.floor(Math.random() * 7)].name)
+      : (lastFiveStar = promotionalFiveStar.name);
     pityCounter = 0;
     pityAfterSeventy = 0.2;
+  } else {
+    resultArray.push(litterBox[Math.floor(Math.random() * 3)]);
+  }
+}
+
+//probability function of the guaranteed promotional character before the 70th pull
+function guaranteedFiveStarRandomOutcome() {
+  let randomNumber = Math.random();
+
+  if (randomNumber <= 0.1) {
+    resultArray.push(fourStar[Math.floor(Math.random() * 7)]);
+  } else if (randomNumber > 0.1 && randomNumber <= 0.106) {
+    resultArray.push(promotionalFiveStar);
+    pityCounter = 0;
+    lastFiveStar = promotionalFiveStar.name;
+  } else {
+    resultArray.push(litterBox[Math.floor(Math.random() * 3)]);
+  }
+}
+
+//soft pity probability function of the guaranteed promotional character after the 70th pull
+function guaranteedFiveStarSoftPity() {
+  pityAfterSeventy = pityAfterSeventy + 0.0001;
+  let randomNumber = Math.random();
+
+  if (randomNumber <= 0.1) {
+    resultArray.push(fourStar[Math.floor(Math.random() * 7)]);
+  } else if (randomNumber > 0.1 && randomNumber <= pityAfterSeventy) {
+    resultArray.push(promotionalFiveStar);
+    pityCounter = 0;
+    pityAfterSeventy = 0.2;
+    lastFiveStar = promotionalFiveStar.name;
   } else {
     resultArray.push(litterBox[Math.floor(Math.random() * 3)]);
   }
