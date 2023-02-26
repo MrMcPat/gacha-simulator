@@ -6,9 +6,9 @@ let resultArray = [];
 //last five star acquired
 let lastFiveStar;
 
-//promotional five star scarameow
+//promotional five star scarameowch
 const promotionalFiveStar = {
-  name: "Scarameow",
+  name: "Scarameowch",
   type: "fiveStar",
 };
 
@@ -151,11 +151,11 @@ function gachaTime() {
     //   ? guaranteedFiveStarRandomOutcome()
     //   : guaranteedFiveStarSoftPity()
     if (pityCounter < 70) {
-      lastFiveStar != "Scarameow"
+      lastFiveStar != "Scarameowch"
         ? guaranteedFiveStarRandomOutcome()
         : fiftyFiftyRandomOutcome();
     } else {
-      lastFiveStar != "Scarameow"
+      lastFiveStar != "Scarameowch"
         ? guaranteedFiveStarSoftPity()
         : fiftyFiftySoftPity();
     }
