@@ -185,14 +185,7 @@ function fiftyFiftyRandomOutcome() {
   if (randomNumber <= 0.1) {
     resultArray.push(fourStar[Math.floor(Math.random() * 7)]);
   } else if (randomNumber > 0.1 && randomNumber <= 0.106) {
-    if (randomNumber >= 0.103) {
-      resultArray.push(fiveStar[Math.floor(Math.random() * 7)]);
-      lastFiveStar = fiveStar[Math.floor(Math.random() * 7)].name;
-    } else {
-      resultArray.push(promotionalFiveStar);
-      lastFiveStar = promotionalFiveStar.name;
-    }
-    pityCounter = 0;
+    fiveStarFiftyFiftyProbability(randomNumber);
   } else {
     resultArray.push(litterBox[Math.floor(Math.random() * 7)]);
   }
@@ -206,18 +199,23 @@ function fiftyFiftySoftPity() {
   if (randomNumber <= 0.1) {
     resultArray.push(fourStar[Math.floor(Math.random() * 7)]);
   } else if (randomNumber > 0.1 && randomNumber <= pityAfterSeventy) {
-    if (randomNumber >= (pityAfterSeventy - 0.1) / 2 + 0.1) {
-      resultArray.push(fiveStar[Math.floor(Math.random() * 7)]);
-      lastFiveStar = fiveStar[Math.floor(Math.random() * 7)].name;
-    } else {
-      resultArray.push(promotionalFiveStar);
-      lastFiveStar = promotionalFiveStar.name;
-    }
-    pityCounter = 0;
+    fiveStarFiftyFiftyProbability(randomNumber);
     pityAfterSeventy = 0.2;
   } else {
     resultArray.push(litterBox[Math.floor(Math.random() * 7)]);
   }
+}
+
+//five star fifty fifty probability conditionals for the above two functions
+function fiveStarFiftyFiftyProbability(randomNumber) {
+  if (randomNumber >= (pityAfterSeventy - 0.1) / 2 + 0.1) {
+    resultArray.push(fiveStar[Math.floor(Math.random() * 7)]);
+    lastFiveStar = fiveStar[Math.floor(Math.random() * 7)].name;
+  } else {
+    resultArray.push(promotionalFiveStar);
+    lastFiveStar = promotionalFiveStar.name;
+  }
+  pityCounter = 0;
 }
 
 //probability function of the guaranteed promotional character before the 70th pull
