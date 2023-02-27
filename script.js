@@ -27,7 +27,7 @@ const fiveStar = [
     type: "fiveStar",
   },
   {
-    name: "Cymeow",
+    name: "Kiddy Cat",
     type: "fiveStar",
   },
   {
@@ -35,7 +35,7 @@ const fiveStar = [
     type: "fiveStar",
   },
   {
-    name: "Shen Nya",
+    name: "Rex Lapurr",
     type: "fiveStar",
   },
   {
@@ -55,23 +55,23 @@ const fourStar = [
     type: "fourStar",
   },
   {
-    name: "Placeholder1",
+    name: "Katveh",
     type: "fourStar",
   },
   {
-    name: "Placeholder2",
+    name: "Not a Cat", //Razor
     type: "fourStar",
   },
   {
-    name: "Placeholder3",
+    name: "Thomatocat",
     type: "fourStar",
   },
   {
-    name: "Placeholder4",
+    name: "Miss Hinya~",
     type: "fourStar",
   },
   {
-    name: "Placeholder5",
+    name: "Actually a Birb", //Kujou Sara
     type: "fourStar",
   },
 ];
@@ -79,15 +79,31 @@ const fourStar = [
 //crap you get when you don't get four or five stars
 const litterBox = [
   {
-    name: "Crap1",
+    name: "Anemo Litter Box",
     type: "threeStar",
   },
   {
-    name: "Crap2",
+    name: "Geo Litter Box",
     type: "threeStar",
   },
   {
-    name: "Crap3",
+    name: "Electro Litter Box",
+    type: "threeStar",
+  },
+  {
+    name: "Dendro Litter Box",
+    type: "threeStar",
+  },
+  {
+    name: "Hydro Litter Box",
+    type: "threeStar",
+  },
+  {
+    name: "Pyro Litter Box",
+    type: "threeStar",
+  },
+  {
+    name: "Cryo Litter Box",
     type: "threeStar",
   },
 ];
@@ -147,17 +163,14 @@ function gachaTime() {
   }
   //run the probability functions depending if you hit the 70th pull or not
   else {
-    // pityCounter < 70
-    //   ? guaranteedFiveStarRandomOutcome()
-    //   : guaranteedFiveStarSoftPity()
     if (pityCounter < 70) {
       lastFiveStar != "Scarameowch"
-        ? guaranteedFiveStarRandomOutcome()
-        : fiftyFiftyRandomOutcome();
+        ? fiftyFiftyRandomOutcome()
+        : guaranteedFiveStarRandomOutcome();
     } else {
       lastFiveStar != "Scarameowch"
-        ? guaranteedFiveStarSoftPity()
-        : fiftyFiftySoftPity();
+        ? fiftyFiftySoftPity()
+        : guaranteedFiveStarSoftPity();
     }
   }
 
@@ -172,16 +185,16 @@ function fiftyFiftyRandomOutcome() {
   if (randomNumber <= 0.1) {
     resultArray.push(fourStar[Math.floor(Math.random() * 7)]);
   } else if (randomNumber > 0.1 && randomNumber <= 0.106) {
-    randomNumber >= 0.103
-      ? resultArray.push(fiveStar[Math.floor(Math.random() * 7)])
-      : resultArray.push(promotionalFiveStar);
-    randomNumber >= 0.103
-      ? (lastFiveStar = fiveStar[Math.floor(Math.random() * 7)].name)
-      : (lastFiveStar = promotionalFiveStar.name);
+    if (randomNumber >= 0.103) {
+      resultArray.push(fiveStar[Math.floor(Math.random() * 7)]);
+      lastFiveStar = fiveStar[Math.floor(Math.random() * 7)].name;
+    } else {
+      resultArray.push(promotionalFiveStar);
+      lastFiveStar = promotionalFiveStar.name;
+    }
     pityCounter = 0;
-    lastFiveStar = promotionalFiveStar.name;
   } else {
-    resultArray.push(litterBox[Math.floor(Math.random() * 3)]);
+    resultArray.push(litterBox[Math.floor(Math.random() * 7)]);
   }
 }
 
@@ -193,16 +206,17 @@ function fiftyFiftySoftPity() {
   if (randomNumber <= 0.1) {
     resultArray.push(fourStar[Math.floor(Math.random() * 7)]);
   } else if (randomNumber > 0.1 && randomNumber <= pityAfterSeventy) {
-    randomNumber >= (pityAfterSeventy - 0.1) / 2 + 0.1
-      ? resultArray.push(fiveStar[Math.floor(Math.random() * 7)])
-      : (lastFiveStar = promotionalFiveStar.name);
-    randomNumber >= (pityAfterSeventy - 0.1) / 2 + 0.1
-      ? (lastFiveStar = fiveStar[Math.floor(Math.random() * 7)].name)
-      : (lastFiveStar = promotionalFiveStar.name);
+    if (randomNumber >= (pityAfterSeventy - 0.1) / 2 + 0.1) {
+      resultArray.push(fiveStar[Math.floor(Math.random() * 7)]);
+      lastFiveStar = fiveStar[Math.floor(Math.random() * 7)].name;
+    } else {
+      resultArray.push(promotionalFiveStar);
+      lastFiveStar = promotionalFiveStar.name;
+    }
     pityCounter = 0;
     pityAfterSeventy = 0.2;
   } else {
-    resultArray.push(litterBox[Math.floor(Math.random() * 3)]);
+    resultArray.push(litterBox[Math.floor(Math.random() * 7)]);
   }
 }
 
@@ -217,7 +231,7 @@ function guaranteedFiveStarRandomOutcome() {
     pityCounter = 0;
     lastFiveStar = promotionalFiveStar.name;
   } else {
-    resultArray.push(litterBox[Math.floor(Math.random() * 3)]);
+    resultArray.push(litterBox[Math.floor(Math.random() * 7)]);
   }
 }
 
@@ -234,6 +248,6 @@ function guaranteedFiveStarSoftPity() {
     pityAfterSeventy = 0.2;
     lastFiveStar = promotionalFiveStar.name;
   } else {
-    resultArray.push(litterBox[Math.floor(Math.random() * 3)]);
+    resultArray.push(litterBox[Math.floor(Math.random() * 7)]);
   }
 }
