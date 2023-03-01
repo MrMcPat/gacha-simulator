@@ -1,134 +1,18 @@
-let primocatnipCount = 0;
-
-//array that stores all the results
-let resultArray = [];
-
-//last five star acquired
-let lastFiveStar;
-
-//promotional five star scarameowch
-const promotionalFiveStar = {
-  name: "Scarameowch",
-  type: "fiveStar",
-};
-
-//sample five stars
-const fiveStar = [
-  {
-    name: "Nyanderer",
-    type: "fiveStar",
-  },
-  {
-    name: "Meowluc",
-    type: "fiveStar",
-  },
-  {
-    name: "Nyal Haitham",
-    type: "fiveStar",
-  },
-  {
-    name: "Kiddy Cat",
-    type: "fiveStar",
-  },
-  {
-    name: "Cyneko",
-    type: "fiveStar",
-  },
-  {
-    name: "Rex Lapurr",
-    type: "fiveStar",
-  },
-  {
-    name: "Tighnyari",
-    type: "fiveStar",
-  },
-];
-
-//sample four stars
-const fourStar = [
-  {
-    name: "Cat-eya",
-    type: "fourStar",
-  },
-  {
-    name: "Dionya",
-    type: "fourStar",
-  },
-  {
-    name: "Katveh",
-    type: "fourStar",
-  },
-  {
-    name: "Not a Cat", //Razor
-    type: "fourStar",
-  },
-  {
-    name: "Thomatocat",
-    type: "fourStar",
-  },
-  {
-    name: "Miss Hinya~",
-    type: "fourStar",
-  },
-  {
-    name: "Actually a Birb", //Kujou Sara
-    type: "fourStar",
-  },
-];
-
-//crap you get when you don't get four or five stars
-const litterBox = [
-  {
-    name: "Anemo Litter Box",
-    type: "threeStar",
-  },
-  {
-    name: "Geo Litter Box",
-    type: "threeStar",
-  },
-  {
-    name: "Electro Litter Box",
-    type: "threeStar",
-  },
-  {
-    name: "Dendro Litter Box",
-    type: "threeStar",
-  },
-  {
-    name: "Hydro Litter Box",
-    type: "threeStar",
-  },
-  {
-    name: "Pyro Litter Box",
-    type: "threeStar",
-  },
-  {
-    name: "Cryo Litter Box",
-    type: "threeStar",
-  },
-];
-
-//counts the number of pulls you've failed to get a five star.
-let pityCounter = 0;
-
-//percent chance increase after you've reached 70 pulls.
-let pityAfterSeventy = 0.2;
-
-//button for a one pull attempt
-const gachaButton = document.getElementById("gacha");
-
-//button for a ten pull attempt
-const gachaTenButton = document.getElementById("gachaTenRoll");
-
 //click event for the one pull button
 gachaButton.addEventListener("click", () => {
-  gachaTime();
+  primocatnipCount >= 160
+    ? gachaTime()
+    : alert("You need to spend your life away, go buy more!");
 });
 
 //click event for the ten pull button
 gachaTenButton.addEventListener("click", () => {
-  for (let i = 0; i < 10; i++) {
-    gachaTime();
+  if (primocatnipCount >= 1600) {
+    for (let i = 0; i < 10; i++) {
+      gachaTime();
+    }
+  } else {
+    alert("You need to spend your life away, go buy more!");
   }
 });
 
@@ -138,6 +22,8 @@ function gachaTime() {
   let lastNinetypulls = resultArray.slice(-89);
 
   pityCounter++;
+  primocatnipCount = primocatnipCount - 160;
+  primocatnipDisplay.innerText = `Primocatnips: ${primocatnipCount}`;
 
   //creates an array of the last ten pull types
   let containsFourStar = lastTenpulls.map((element) => {
@@ -175,7 +61,13 @@ function gachaTime() {
   }
 
   //outputs the result array of your pulls
-  console.log(resultArray);
+  const resultListItem = document.createElement("li");
+
+  resultArray.forEach((element) => {
+    gachaResultsDisplay.appendChild(
+      resultListItem
+    ).innerText = `${element.name}, ${element.type}`;
+  });
 }
 
 //probability function of the fifty fifty five star before the 70th pull
@@ -186,6 +78,7 @@ function fiftyFiftyRandomOutcome() {
     resultArray.push(fourStar[Math.floor(Math.random() * 7)]);
   } else if (randomNumber > 0.1 && randomNumber <= 0.106) {
     fiveStarFiftyFiftyProbability(randomNumber);
+    pityCounter = 0;
   } else {
     resultArray.push(litterBox[Math.floor(Math.random() * 7)]);
   }
@@ -200,6 +93,7 @@ function fiftyFiftySoftPity() {
     resultArray.push(fourStar[Math.floor(Math.random() * 7)]);
   } else if (randomNumber > 0.1 && randomNumber <= pityAfterSeventy) {
     fiveStarFiftyFiftyProbability(randomNumber);
+    pityCounter = 0;
     pityAfterSeventy = 0.2;
   } else {
     resultArray.push(litterBox[Math.floor(Math.random() * 7)]);
@@ -215,7 +109,6 @@ function fiveStarFiftyFiftyProbability(randomNumber) {
     resultArray.push(promotionalFiveStar);
     lastFiveStar = promotionalFiveStar.name;
   }
-  pityCounter = 0;
 }
 
 //probability function of the guaranteed promotional character before the 70th pull
