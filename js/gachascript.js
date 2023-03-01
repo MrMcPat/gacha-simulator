@@ -1,10 +1,8 @@
 //click event for the one pull button
 gachaButton.addEventListener("click", () => {
-  if (primocatnipCount >= 160) {
-    gachaTime();
-  } else {
-    alert("You need to spend your life away, go buy more!");
-  }
+  primocatnipCount >= 160
+    ? gachaTime()
+    : alert("You need to spend your life away, go buy more!");
 });
 
 //click event for the ten pull button
